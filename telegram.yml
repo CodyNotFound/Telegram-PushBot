@@ -1,0 +1,22 @@
+name: Telegram Bot
+on: push
+jobs:
+  send_message:
+    name: Send Message
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown 
+          message: |
+            New Commit in Repository *${{ github.repository }}* Branch *${{ github.ref }}* by *${{ github.actor }}*.
+            ```
+            Repo   : ${{ github.repository }}
+            Ref    : ${{ github.ref }}
+            Sha    : ${{ github.sha }}
+            Author : ${{ github.actor }}
+            Message: ${{ github.event.head_commit.message }}
+            ```
